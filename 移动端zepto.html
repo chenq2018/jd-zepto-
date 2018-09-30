@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    zepto JS插件:
+        jQuery针对于PC端的开发
+        zepto针对于移动端的开发
+        使用方式差不多
+
+        zepto: 是分模块的
+        jQuery: 下载是一个整体，庞大
+
+        如果在zepto中使用原jquery中的选择器,则需要引入zepto另一个模块selector js文件
+
+        zepto语法:
+           before两种方法，使用相反
+           first.before(last.clone());
+           last.clone().insertBefore(first);
+
+    //隐式迭代可以解决大部分相同的操作,lis为li的数组
+    lis.width(bannerWidth);
+    //设置偏移
+    bannerUl.css("transform", -bannerWidth);
+    //each方法显示遍历一般对所有li做不懂操作时，用显示遍历
+    //lis.each(function (index, value) {
+    //    $(value).width(bannerWidth);
+    //})
+
+    在zepto中直接使用animate()实现,animate是基于css3中transition进行封装
+    1. 需要添加动画效果的样式——对象
+    2. 动画的耗时
+    3. 动画的速度函数 animation-timing-function
+    4. 当前动画执行完毕后的回调
+    bannerUl.animate(
+            {"transition": -index * bannerWidth},
+            200,
+            "ease-in-out",
+            function(){
+                if(index == 9){
+                    index = 1;
+                    //位移
+                    setTransform();
+                } else if(index == 0){
+                    index = 8;
+                    //位移
+                    setTransform();
+                    //bannerUl.css("left", -index * bannerWidth);
+                }
+                //点变
+                setPoint();
+            }
+    );
+
+    zepto中Touch事件:
+        tap: 轻敲
+        singleTap and doubleTap: 单机双击
+        swipe: 滑动
+             swipeleft  swiperight
+
+    在谷歌浏览器的模拟器中,无法正确的触发swipe事件，但是可以触发tap事件
+
+    //zepto中Touch事件,需要引入touch JS文件
+    //左滑动
+    bannerUl.on("swipeLeft", function(){
+        clearInterval(timeId);
+        index--;
+        imgAnimation();
+    });
+    //右滑动
+    bannerUl.on("swipeRight", function(){
+        clearInterval(timeId);
+        index++;
+        imgAnimation();
+    });
+
+    zepto定制:
+       1. 安装node版本
+       2. 打开node.js command prompt界面
+       3. cmd中输入 node-v, 有版本显示则安装成功
+       4 cd到当前zepto-master目录 如: E:\前端\webStorm\WebStorm 10.0.3\project\移动WEB第三天\今日资料\zepto-master
+       5. 删除原有的node_modules文件
+       6. cmd中输入 npm install安装
+       7. 打开mask文件,找到target.bulid在module中添加想要的js
+       8. cmd中输入npm run-script dist则定制成功
+</script>
+</body>
+</html>
